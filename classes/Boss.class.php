@@ -15,7 +15,7 @@ class Boss extends Staff
 	}
 	
 	public function addUser($params) {
-		$return = (array) self::insert('staff', array('email' => $params['email'], 'access_type' => $params['access_type']));
+		$return = (array) self::insert('staff', array('email' => $params['email'], 'name' => $params['name'], 'access_type' => $params['access_type']));
 		$link = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
 		$link .= '://'.$_SERVER['HTTP_HOST'].'/cpanel/verify?hash='.md5($params['email']);
 		$message = 'Click the following link to verify your email as a GECC Employee<br><b>If this is not meant for you</b>, ignore this.<br><a href="'.$link.'">Click here</a> to proceed or run the following url in your browser.<br>'.$link;
@@ -36,8 +36,17 @@ class Boss extends Staff
 		
 	}
 
-	public function getUsers() {
-		return self::get('staff', array());
+	public function getStatus($user) {
+		$status = 'Unverified';
+		if (count($user) && $user->verified) {
+			# code...
+			$status = ($user->suspended) ? 'Suspended' : 'Active';
+		}
+		return $status;
+	}
+
+	public function getEmployees() {
+		return array_reverse(self::get('staff', array()));
 	}
 
 }

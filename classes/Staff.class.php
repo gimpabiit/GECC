@@ -46,6 +46,17 @@ class Staff extends DBO
 		return null;
 	}
 
+	public function verify($params) {
+		return (array) self::get('staff', array('email' => $params['email']));
+
+		return self::dbc()->update('staff', array('id' => $params['id']), array('verified' => 1, 'password' => Pee::hide($params['pass'])));
+	}
+
+	public static function logout() {
+		Session::destroy();
+		Redirect::to('login');
+	}
+
 	public function signUp($params = array()) {
 		$iniPass = $params['password'];
 		if (isset($params['password'])) {

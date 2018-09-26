@@ -43,9 +43,11 @@ if (Input::exists('post')) {
 				// echo "execute put request";
 				break;
 			
-			case 'delete':
+			case 'verify':
 				# code...
-				$data[] = $db->delete($table, $where);
+				$st = new Staff;
+				$data[] = $st->verify($where);
+				// $data[] = $db->delete($table, $where);
 				// $data[] = $db->delete($table, $where);
 				// echo "execute delete request";
 				break;
@@ -55,6 +57,13 @@ if (Input::exists('post')) {
 				// echo "Execute New User Addition";
 				$b = new Boss;
 				$data[] = $b->addUser($params);
+				break;
+
+			case 'new_room':
+				# code...
+				// echo "Execute New User Addition";
+				$a = new Admin;
+				$data[] = $a->addRoom($params);
 				break;
 		}
 	} else {

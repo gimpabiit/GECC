@@ -1,3 +1,4 @@
+<?php $boss = new Boss; ?>
 <?php require_once('includes/includes.header.php'); ?>
 <section id="container" >
   <!-- **********************************************************************************************************************************************************
@@ -9,12 +10,11 @@
       <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
     </div>
     <!--logo start-->
-    <a href="index.html" class="logo"><b>DASHGUM FREE</b></a>
+    <a href="index.html" class="logo"><b>GECC Dashboard</b></a>
     <!--logo end-->
     <div class="nav notify-row" id="top_menu">
     <!--  notification start -->
-      <ul class="nav top-menu">
-        <!-- settings start -->
+      <!-- <ul class="nav top-menu">
         <li class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
             <i class="fa fa-tasks"></i>
@@ -82,8 +82,6 @@
             </li>
           </ul>
         </li>
-        <!-- settings end -->
-        <!-- inbox dropdown start-->
         <li id="header_inbox_bar" class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
             <i class="fa fa-envelope-o"></i>
@@ -147,13 +145,12 @@
             </li>
           </ul>
         </li>
-        <!-- inbox dropdown end -->
-      </ul>
+      </ul> -->
       <!--  notification end -->
     </div>
     <div class="top-menu">
       <ul class="nav pull-right top-menu">
-        <li><a class="logout" href="login.html">Logout</a></li>
+        <li><a class="logout" href="logout">Logout</a></li>
       </ul>
     </div>
   </header>
@@ -169,7 +166,7 @@
       <ul class="sidebar-menu" id="nav-accordion">
         
         <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-        <h5 class="centered">Marcel Newman</h5>
+        <h5 class="centered">Super Administrator</h5>
         
         <li class="mt">
           <a class="active" href="index.html">
@@ -177,7 +174,7 @@
             <span>Dashboard</span>
           </a>
         </li>
-        <li class="sub-menu">
+        <!-- <li class="sub-menu">
           <a href="javascript:;" >
             <i class="fa fa-desktop"></i>
             <span>UI Elements</span>
@@ -238,7 +235,7 @@
             <li><a  href="morris.html">Morris</a></li>
             <li><a  href="chartjs.html">Chartjs</a></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
       <!-- sidebar menu end-->
     </div>
@@ -278,33 +275,56 @@
             </div>
             <div class="col-md-12">
               <div class="content-panel">
-                <h4><i class="fa fa-angle-right"></i> Basic Table</h4>
+                <h4><i class="fa fa-angle-right"></i> Employees List</h4>
                 <hr>
                 <table class="table table-hover">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>User</th>
+                      <th>Name</th>
                       <th>Role</th>
                       <th>Status</th>
-                      <th></th>
+                      <th>...</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark Otto</td>
-                      <td>Receptionist</td>
-                      <td><span class="bg-danger text-light p-1">Suspended</span></td>
-                      <td><button class="btn btn-sm btn-success"><span class="li_user"></span></button></td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Otto Mark</td>
-                      <td>Accountant</td>
-                      <td><span class="bg-success text-light p-1">Active</span></td>
-                      <td><button class="btn btn-sm btn-danger"><span class="li_trash"></span></button></td>
-                    </tr>
+                    <?php foreach ($boss->getEmployees() as $key => $value): ?>
+                      <tr>
+                        <td><?php echo $value->id; ?></td>
+                        <td><?php echo $value->name; ?></td>
+                        <td><?php echo $value->access_type; ?></td>
+                        <?php switch ($boss->getStatus($value)) {
+                          case 'Suspended':
+                            # code...
+                            ?>
+                            <td><span class="bg-danger text-light p-1">Suspended</span></td>
+                            <td>
+                              <button class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="left" title="Click to unsuspend Employee"><span class="fa fa-user"></span></button>
+                            </td>
+                            <?php
+                            break;
+                          case 'Active':
+                            # code...
+                            ?>
+                            <td><span class="bg-success text-light p-1">Active</span></td>
+                            <td>
+                              <button data-toggle="tooltip" data-placement="left" title="Click to suspend Employee" class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></button>
+                              <button type="button" data-toggle="tooltip" data-placement="left" title="Click to resend verification" class="btn btn-sm btn-success"><span class="fa fa-send"></span></button>
+                            </td>
+                            <?php
+                            break;
+                          case 'Unverified':
+                            # code...
+                            ?>
+                            <td><span class="bg-warning text-light p-1">Unverified</span></td>
+                            <td>
+                              <button type="button" data-toggle="tooltip" data-placement="left" title="Click to resend verification" class="btn btn-sm btn-success"><span class="fa fa-send"></span></button>
+                            </td>
+                            <?php
+                            break;
+                        } ?>
+                      </tr>
+                    <?php endforeach ?>
                   </tbody>
                 </table>
               </div>
@@ -387,7 +407,7 @@
   <!--footer start-->
   <footer class="site-footer">
     <div class="text-center">
-      2014 - Alvarez.is
+      2018 - GIMPA Incubation
       <a href="index.html#" class="go-top">
         <i class="fa fa-angle-up"></i>
       </a>
@@ -407,6 +427,11 @@
       <form class="container-fluid" method="post" action="/controller/">
         <div class="modal-body">
           <div class="form-group">
+            <label for="exampleInput1">Enter Employee's Name</label>
+            <input type="text" required class="form-control" name="name" id="exampleInput1" aria-describedby="emailInput" placeholder="Enter Name">
+            <small id="emailHelp" class="form-text text-warning">We'll never share your info with anyone else.</small>
+          </div>
+          <div class="form-group">
             <label for="exampleInputEmail1">Enter Employee's Email address</label>
             <input type="email" required class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-warning">We'll never share your email with anyone else.</small>
@@ -425,10 +450,11 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <input type="text" hidden name="_method" value="new_user">
-          <button type="submit" class="btn btn-primary">Add New User</button>
+          <button type="submit" class="btn btn-theme">Add Employee</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+
 <?php require_once('includes/includes.footer.php'); ?>

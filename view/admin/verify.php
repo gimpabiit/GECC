@@ -1,4 +1,16 @@
-<?php require_once('includes/includes.header.php'); ?>
+<?php 
+if (Input::exists('get')) {
+	# code...
+	if (!Input::has('hash')) {
+		# code...
+		require('404.php');
+		die;
+	}
+} else {
+	require('404.php');
+	die;
+}
+require_once('includes/includes.header.php'); ?>
 
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -10,20 +22,18 @@
 		      <form class="form-login" action="index.html">
 		        <h2 class="form-login-heading">Verify Email</h2>
 		        <div class="login-wrap">
-		            <input type="text" class="form-control" placeholder="User Email" autofocus>
+		            <input type="email" class="form-control" placeholder="User Email" autofocus>
 		            <br>
-		            <div class="form-group">
-		            	<input type="password" id="main" class="form-control" placeholder="Password">
-		            </div>
-		            <br>
-		            <div class="form-group">
-		            	<input type="password" id="other-pass" class="form-control" placeholder="Re-Enter Password">
-		            </div>
-		            <label class="checkbox">
-		                <span class="pull-right">
-		                	<!-- <a data-toggle="modal" href="#myModal"> Forgot Password?</a> -->
-		                </span>
-		            </label>
+			        <div class="hidden">
+			        	<div class="form-group">
+			            	<input type="password" id="main" class="form-control" placeholder="Password">
+			            </div>
+			            <br>
+			            <div class="form-group">
+			            	<input type="password" id="other-pass" class="form-control" placeholder="Re-Enter Password">
+			            </div>
+			        </div>
+		            <div style="margin: 10px;"></div>
 		            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> COMPLETE VERIFICATION</button>
 		            <hr>
 		            
@@ -110,6 +120,23 @@
     				$('input[type="password"]').css('borderColor', '#f00');  
     				alert();				
     			}
+    		});
+
+    		$('input[type="email"]').on('keyup', function(e) {
+    			var val = '_method=verify&email=';
+    			val += $(this).val();
+    			$.ajax({
+    				url: '/controller/',
+    				method: 'post',
+    				data: val,
+    				success: function (d) {
+    					// body...
+    					console.log(d);
+    				},
+    				error: function (e) {
+    					alert('error', e);
+    				}
+    			});
     		});
     	});
     </script>

@@ -1,12 +1,16 @@
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/jquery-1.8.3.min.js"></script>
+    <!-- <script src="assets/js/jquery.js"></script> -->
+    <!-- <script src="assets/js/jquery-1.8.3.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jqueryForm.js"></script>
+    <script src="http://localhost/view/admin/assets/js/cpanel.js"></script>
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="assets/js/jquery.sparkline.js"></script>
+    <!-- <script>alert();</script> -->
 
 
     <!--common script for all pages-->
@@ -17,57 +21,34 @@
 
     <!--script for this page-->
     <script src="assets/js/sparkline-chart.js"></script>    
-	<script src="assets/js/zabuto_calendar.js"></script>	
-	
-	<script type="text/javascript">
-        $(document).ready(function () {
-            // $('#exampleModal').modal('show');
-        // var unique_id = $.gritter.add({
-        //     // (string | mandatory) the heading of the notification
-        //     title: 'Welcome to Dashgum!',
-        //     // (string | mandatory) the text inside the notification
-        //     text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',
-        //     // (string | optional) the image to display on the left
-        //     image: 'assets/img/ui-sam.jpg',
-        //     // (bool | optional) if you want it to fade out on its own or just sit there
-        //     sticky: true,
-        //     // (int | optional) the time you want it to be alive for before fading out
-        //     time: '',
-        //     // (string | optional) the class name you want to apply to that specific message
-        //     class_name: 'my-sticky-class'
-        // });
-
-        // return false;
-        });
-	</script>
-
+	<script src="assets/js/zabuto_calendar.js"></script>
 
     <script>
-    var doughnutData = [
-    {
-    value: 60,
-    color:"#68dff0"
-    },
-    {
-    value : 40,
-    color : "#444c57"
-    }
-    ];
-    var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
-    </script>
+        var doughnutData = [
+        {
+        value: 60,
+        color:"#68dff0"
+        },
+        {
+        value : 40,
+        color : "#444c57"
+        }
+        ];
+        var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+        </script>
 
-    <script>
-    var doughnutData = [
-    {
-    value: 70,
-    color:"#68dff0"
-    },
-    {
-    value : 30,
-    color : "#fdfdfd"
-    }
-    ];
-    var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
+        <script>
+        var doughnutData = [
+        {
+        value: 70,
+        color:"#68dff0"
+        },
+        {
+        value : 30,
+        color : "#fdfdfd"
+        }
+        ];
+        var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
     </script>
 	
 	<script type="application/javascript">
@@ -105,6 +86,5 @@
         }
     </script>
   
-
   </body>
 </html>
