@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Mirrored from hotel-empire.sohelrana.me/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 29 Jul 2017 09:17:51 GMT -->
-
-<!-- Mirrored from riyasatresorts.com/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Sep 2018 11:06:17 GMT -->
-<head>
-    <title>GECC - About Us</title>
-    <?php include "include/head.html" ?>
-</head>
+<?php
+$title = 'GECC - About Us';
+include "include/head.php";
+?>
 
 <body>
 <!-- Header Start -->

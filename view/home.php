@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>GECC - GIMPA Executive Conference Center</title>
-    <?php require_once("include/head.html"); ?>
-</head>
-    
+<?php
+$title = 'GECC - GIMPA Executive Conference Center';
+include "include/head.php";
+?>
 <body>
 <!-- Header Start -->
 <?php include "include/header.html" ?>
