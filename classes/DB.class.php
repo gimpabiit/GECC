@@ -62,9 +62,9 @@ class DB
 				# code...
 				if (strpos($key, '!') !== false) {
 					# code...
-					$sql.= "`". str_replace('!', '', $key)."` != '".$value ."' AND ";
+					$sql.= "`". str_replace('!', '', $key)."` != \"".$value ."\" AND ";
 				} else {
-					$sql.= "`". $key."` = '".$value ."' AND ";
+					$sql.= "`". $key."` = \"".$value ."\" AND ";
 				}
 			}
 			$sql = substr($sql, 0, strlen($sql) - 4);
@@ -106,10 +106,10 @@ class DB
 					if ($x==0) {
 						# code...
 						$columns = $columns."`".$key."` ";
-						$values = $values."'".$value."' ";
+						$values = $values."\"".$value."\" ";
 					} else {
 						$columns = $columns.", `".$key."` ";
-						$values = $values.", '".$value."' ";
+						$values = $values.", \"".$value."\" ";
 					}
 				}
 				$x++;
@@ -130,7 +130,7 @@ class DB
 		$x = 1;
 		foreach ($fields as $name => $field) {
 			# code...
-			$set.="`{$name}` = '{$field}'";
+			$set.="`{$name}` = \"{$field}\"";
 			if ($x < count($fields)) {
 				# code...
 				$set.=', ';
@@ -141,7 +141,7 @@ class DB
 		$x = 1;
 		foreach ($id as $key => $value) {
 			# code...
-			$where .= "`{$key}` = '{$value}'";
+			$where .= "`{$key}` = \"{$value}\"";
 			if ($x < count($id)) {
 				# code...
 				$where.=' AND ';

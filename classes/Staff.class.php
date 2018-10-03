@@ -10,6 +10,7 @@ class Staff extends DBO
 	
 	function __construct($user = null) {
 		# code...
+		Redirect::to('login');
 		if ($user == null) {
 			# code...
 			if (Session::exists('user_session_id')) {

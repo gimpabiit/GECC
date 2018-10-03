@@ -26,145 +26,72 @@ include "include/head.php";
 </div>
 <!-- Page Banner End -->
 
-<!-- About Item Start -->
-<div class="about-item">
+<!-- Section-2 Start-->
+<div class="Section-2 content-area ">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="text">
-                    <h2>Our Rooms List</h2>
-                </div>
-            </div>
-            <?php foreach ($guest->getCategories() as $key => $room):
-            $category = new Category($room->id);
-            ?>
-            <div class="col-md-12">
-                <?php if ($key > 0): ?>
-                    <hr>
-                <?php endif ?>
-                <?php if ($key % 2 == 0): ?>
-                <div class="row" style="margin-top: 15px;">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <div class="rooms-detail-slider simple-slider">
-                            <div id="carousel-custom" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-outer">
-                                    <!-- Wrapper for slides -->
-                                    <div class="carousel-inner">
-                                        <div class="item">
-                                            <img src="img/about-item-3.jpg" class="img-preview" alt="About">
-                                        </div>
-                                        <div class="item active">
-                                            <img src="img/about-item-4.jpg" class="img-preview" alt="About">
-                                        </div>
-                                        <div class="item">
-                                            <img src="img/about-item-5.jpg" class="img-preview" alt="About">
-                                        </div>
+            <div class="testimonials-2">
+                <div id="carouse2-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                    
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <?php foreach ($guest->getCategories() as $key => $room):
+                        $category = new Category($room->id);
+                        ?>
+                        <div class="item <?php echo $key==0 ? 'active' : ''; ?>">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-pad" style="background: url('');">
+                                        <img src="<?php echo $category->getImages()[0]->image; ?>" alt="room01" class="img-responsive">
+                                        <!-- <img src="img/room01.jpg" alt="room01" class="img-responsive"> -->
                                     </div>
-                                    <!-- Controls -->
-                                    <a class="left carousel-control" href="#carousel-custom" role="button" data-slide="prev">
-                                            <span class="slider-mover-left no-bg" aria-hidden="true">
-                                                <img src="img/chevron-left.png" alt="chevron-left">
-                                            </span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="right carousel-control" href="#carousel-custom" role="button" data-slide="next">
-                                            <span class="slider-mover-right no-bg" aria-hidden="true">
-                                                <img src="img/chevron-right.png" alt="chevron-right">
-                                            </span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <div class="text">
-                            <h2><?php echo $category->getName(); ?></h2>
-                            <p class="text-capitalize"><?php echo $category->getDescription(); ?></p>
-                            <h3>Features</h3>
-                            <ul class="list-unstyled">
-                                <li>Feature item</li>
-                                <li>Feature item</li>
-                                <li>Feature item</li>
-                                <li>Feature item</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <hr>
-                            <div class="text-left">
-                                <h2 class="h2">$230 <small> per Night</small></h2>
-                            </div>
-                            <div class="text-right">
-                                <button class="btn btn-primary">Book Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- About Item End -->
-                </div>
-                <?php else: ?>
-                <div class="col-md-12">
-                    <div class="row" style="margin-top: 15px;">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="text">
-                                <h2>Room Name</h2>
-                                <p>Room Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                <h2>Features</h2>
-                                <ul class="list-unstyled">
-                                    <li>Feature item</li>
-                                    <li>Feature item</li>
-                                    <li>Feature item</li>
-                                    <li>Feature item</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="rooms-detail-slider simple-slider">
-                                <div id="carousel-custom2" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-outer">
-                                        <!-- Wrapper for slides -->
-                                        <div class="carousel-inner">
-                                            <div class="item">
-                                                <img src="img/about-item-1.jpg" class="img-preview" alt="About">
-                                            </div>
-                                            <div class="item active">
-                                                <img src="img/about-item-2.jpg" class="img-preview" alt="About">
-                                            </div>
-                                            <div class="item">
-                                                <img src="img/about-item-3.jpg" class="img-preview" alt="About">
-                                            </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 details">
+                                        <h3><?php echo $category->getName(); ?></h3>
+                                        <h4>Room Details</h4>
+                                        <ul>
+                                            <li>
+                                                <strong>Guests:</strong> <?php echo $category->getAdult(); ?>
+                                            </li>
+                                            <li>
+                                                <strong>Children:</strong> <?php echo $category->getChild(); ?>
+                                            </li>
+                                            <li>
+                                                <u>Features / Amenities</u>
+                                            </li>
+                                            <?php foreach ($category->getAmenities() as $key => $value): ?>
+                                                <li>
+                                                   <strong><?php echo $category->getAmenityName($value->amenity_id); ?></strong>
+                                                </li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                        <div class="price">
+                                            Rates from  <span class="amount"> $<?php echo $category->getPrice(); ?>.00</span> per night
                                         </div>
-                                        <!-- Controls -->
-                                        <a class="left carousel-control" href="#carousel-custom2" role="button" data-slide="prev">
-                                                <span class="slider-mover-left no-bg" aria-hidden="true">
-                                                    <img src="img/chevron-left.png" alt="chevron-left">
-                                                </span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="right carousel-control" href="#carousel-custom2" role="button" data-slide="next">
-                                                <span class="slider-mover-right no-bg" aria-hidden="true">
-                                                    <img src="img/chevron-right.png" alt="chevron-right">
-                                                </span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
+                                        <button class="btn btn-fill" type="button" data-toggle="modal" data-target="#myModal">view Room Details</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- About Item End -->
-                    </div>
-                </div> 
-                <?php endif ?>
-                
+                    <?php endforeach ?>
+                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carouse2-example-generic" role="button" data-slide="prev">
+                    <span class="slider-mover-left" aria-hidden="true">
+                        <img src="img/chevron-left.png" alt="left-chevron">
+                    </span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carouse2-example-generic" role="button" data-slide="next">
+                    <span class="slider-mover-right" aria-hidden="true">
+                        <img src="img/chevron-right.png" alt="right-chevron">
+                    </span>
+                    <span class="sr-only">Next</span>
+                </a>
+                </div>
             </div>
-            <?php endforeach ?>
-        </div>
     </div>
 </div>
+
 <!-- Footer Start-->
 <footer class="main-footer clearfix">
     <div class="container">
@@ -341,6 +268,25 @@ include "include/head.php";
     </div>
 </div>
 <!-- Sub Footer-->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="border-radius: 0px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

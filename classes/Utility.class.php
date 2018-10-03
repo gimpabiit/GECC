@@ -22,7 +22,7 @@ class Utility
 
 	public static function uploadMultipleImages($file = array(), $name, $location) {
 		$return = array();
-		for ($i=0; $i < count($file[$name]['name']); $i++) { 
+		for ($i=0; $i < count($file[$name]['name']); $i++) {
 			# code...
 			if (is_uploaded_file($file[$name]['tmp_name'][$i])) {
 				# code...

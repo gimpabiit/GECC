@@ -1,6 +1,6 @@
 <?php 
 require_once('../core/init.php');
-Redirect::view('application/json');
+// Redirect::view('application/json');
 
 $user = new User;
 $admin = new Admin;
@@ -11,7 +11,7 @@ $url = Input::getAll('get');
 $router = new Router($url['url']);
 $table = $router->pop();
 
-// echo "<pre>";
+echo "<pre>";
 // if (Input::exists('post')) {
 // 		# code...
 // 	// echo "All posts";
@@ -22,6 +22,7 @@ $table = $router->pop();
 // 	// echo "all files";
 // 	$data[] = Input::getAll('file');
 // }
+// print_r($data);
 // die;
 
 if (Input::exists('post')) {
@@ -52,6 +53,12 @@ if (Input::exists('post')) {
 				// echo "execute delete request";
 				break;
 
+			case 'add_amenity':
+				# code...
+				$st = new Admin;
+				$data[] = $st->addAmenity($params);
+				break;
+
 			case 'new_user':
 				# code...
 				// echo "Execute New User Addition";
@@ -59,9 +66,19 @@ if (Input::exists('post')) {
 				$data[] = $b->addUser($params);
 				break;
 
-			case 'new_room':
+			case 'new_category':
 				# code...
 				// echo "Execute New User Addition";
+				$a = new Admin;
+				$amenities = Input::get('amenities');
+				unset($params['amenities']);
+				// var_dump($params);
+				// die;
+				$data[] = $a->addCategory($params, $amenities, Input::getAll('file'));
+				break;
+
+			case 'add_room':
+				# code...
 				$a = new Admin;
 				$data[] = $a->addRoom($params);
 				break;
@@ -114,4 +131,5 @@ elseif (Input::exists('get')) {
 }
 
 
-echo json_encode($data);
+// echo json_encode($data);
+var_dump($data);

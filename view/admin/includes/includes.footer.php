@@ -4,7 +4,7 @@
     <!-- <script src="assets/js/jquery-1.8.3.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jqueryForm.js"></script>
+    <!-- <script src="assets/js/jqueryForm.js"></script> -->
     <script src="http://localhost/view/admin/assets/js/cpanel.js"></script>
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
@@ -21,7 +21,8 @@
 
     <!--script for this page-->
     <script src="assets/js/sparkline-chart.js"></script>    
-	<script src="assets/js/zabuto_calendar.js"></script>
+    <script src="assets/js/zabuto_calendar.js"></script>
+	<script src="assets/js/app.js"></script>
 
     <script>
         var doughnutData = [
@@ -85,6 +86,7 @@
             console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
         }
     </script>
+
   
   </body>
 </html>
