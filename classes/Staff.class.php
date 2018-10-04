@@ -10,7 +10,6 @@ class Staff extends DBO
 	
 	function __construct($user = null) {
 		# code...
-		Redirect::to('login');
 		if ($user == null) {
 			# code...
 			if (Session::exists('user_session_id')) {
@@ -24,19 +23,26 @@ class Staff extends DBO
 		// die;
 	}
 
-	public function logIn($params = array()) {
+	public function logIn($params) {
 		// Session::destroy();
 		$params['suspend'] = 0;
-		$data = self::get('staff', $params);
+		$data = self::get('staff', array('email' => $params['email']));
 		if ($data != null) {
-			// var_dump($data);
 			# code...
-			// if (Pee::verify($params['password'], $data[0]->password)) {
+			$data = $data[0];
+			if (empty($data->password) && $data->verified === 0 && $data->suspended === 1) {
 				# code...
-				Session::put('session', $params['email']);
-				Session::put('name', $data[0]->name);
-				Session::put('user_session_id', $data[0]->id);
-			// }
+				return false;
+			}
+			if (Pee::verify($params['password'], $data->password)) {
+				# code...
+				Session::put('session_user_email', $params['email']);
+				Session::put('session_staff_name', $data->name);
+				Session::put('user_session_id', $data->id);
+				Session::put('user_session_access', $data->access_type);
+			}
+		} else {
+			return false;
 		}
 		if ($this->hasLoggedIn()) {
 			# code...
@@ -48,9 +54,9 @@ class Staff extends DBO
 	}
 
 	public function verify($params) {
-		return (array) self::get('staff', array('email' => $params['email']));
+		return (array) self::get('staff', array('email' => $params['email'], 'verified' => 0));
 
-		return self::dbc()->update('staff', array('id' => $params['id']), array('verified' => 1, 'password' => Pee::hide($params['pass'])));
+		// return self::dbc()->update('staff', array('id' => $params['id']), array('verified' => 1, 'password' => Pee::hide($params['pass'])));
 	}
 
 	public static function logout() {
@@ -63,8 +69,13 @@ class Staff extends DBO
 		if (isset($params['password'])) {
 			# code...
 			$params['password'] = Pee::hide($params['password']);
+			$params['verified'] = 1;
 		}
-		self::dbc()->insert('user', $params);
+		// var_dump($params);
+		// $staff = get('staff')[0]->id;
+
+		self::dbc()->update('staff', array('email' => $params['email']), $params);
+		die;
 		if (!self::dbc()->error()) {
 			# code...
 			$login = $this->login(array('email' => $params['email'], 'password' => $iniPass));
@@ -73,34 +84,32 @@ class Staff extends DBO
 	}
 
 	public function hasLoggedIn() {
-		// echo Session::get('user_session_id');
-		// die;
 		return Session::exists('user_session_id'); 
 	}
 
 	public function sendToPage($id) {
-		$permission = self::get('staff', array('id' => $id))[0]->user_type;
+		$permission = self::get('staff', array('id' => $id))[0]->access_type;
 		// $allowed $_SERVER['REQUEST_URI'];
 		$url;
-		switch ($permission) {
-			case 'admin':
+		switch (strtolower($permission)) {
+			case 'accountant':
 				# code...
-				$url = '/admin/points-info';
+				$url = '/cpanel/accounts';
 				break;
 			
-			case 'agent':
+			case 'receptionist':
 				# code...
-				$url = '/agent/orders';
+				$url = '/cpanel/reception';
 				break;
 			
-			case 'operations':
+			case 'super-administrator':
 				# code...
-				$url = '/operations/points';
+				$url = '/cpanel/home';
 				break;
 			
-			case 'dispatch':
+			case 'administrator':
 				# code...
-				$url = '/delivery/deliveries';
+				$url = '/cpanel/administrator';
 				break;
 
 			// default:

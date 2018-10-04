@@ -1,6 +1,6 @@
 <?php 
 require_once('../core/init.php');
-// Redirect::view('application/json');
+Redirect::view('application/json');
 
 $user = new User;
 $admin = new Admin;
@@ -11,7 +11,7 @@ $url = Input::getAll('get');
 $router = new Router($url['url']);
 $table = $router->pop();
 
-echo "<pre>";
+// echo "<pre>";
 // if (Input::exists('post')) {
 // 		# code...
 // 	// echo "All posts";
@@ -47,10 +47,7 @@ if (Input::exists('post')) {
 			case 'verify':
 				# code...
 				$st = new Staff;
-				$data[] = $st->verify($where);
-				// $data[] = $db->delete($table, $where);
-				// $data[] = $db->delete($table, $where);
-				// echo "execute delete request";
+				$data[] = $st->verify($params);
 				break;
 
 			case 'add_amenity':
@@ -81,6 +78,19 @@ if (Input::exists('post')) {
 				# code...
 				$a = new Admin;
 				$data[] = $a->addRoom($params);
+				break;
+
+			case 'login':
+				# code...
+				$s = new Staff;
+				$data[] = $s->login($params);
+				// die;
+				break;
+
+			case 'signup':
+				# code...
+				$s = new Staff;
+				$data[] = $s->signUp($params);
 				break;
 		}
 	} else {
@@ -131,5 +141,5 @@ elseif (Input::exists('get')) {
 }
 
 
-// echo json_encode($data);
-var_dump($data);
+echo json_encode($data);
+// var_dump($data);

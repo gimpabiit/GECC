@@ -8,10 +8,10 @@ class Boss extends Staff
 {
 
 	function __construct() {
-		// if (Session::exists('staff')) {
-		// 	# code...
-		// }
-		// die('You do not have access to this place');
+		if (!Session::exists('user_session_access') || Session::get('user_session_access') != 'super-administrator') {
+			# code...
+			Redirect::to('login');
+		}
 	}
 	
 	public function addUser($params) {

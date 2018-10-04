@@ -20,7 +20,7 @@ class Category extends DBO
 	}
 
 	public static function getAll() {
-		self::dbc()->get('category');
+		self::dbc()->get('categories');
 		return self::dbc()->results();
 	}
 
@@ -98,6 +98,15 @@ class Category extends DBO
 
 	protected static function dbc() {
 		return DB::getInstance();
+	}
+
+	public function getRooms() {
+		if (!is_null($this->id)) {
+			# code...
+			return array();
+		}
+		$rooms = self::get('room', array('category_id' => $this->id));
+		return count($rooms) ? $rooms : array();
 	}
 
 }

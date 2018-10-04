@@ -7,6 +7,13 @@
 class Admin extends Staff
 {
 
+	function __construct() {
+		if (!Session::exists('user_session_access') || Session::get('user_session_access') != 'administrator') {
+			# code...
+			Redirect::to('login');
+		}
+	}
+
 	public function getRooms() {
 		return array_reverse(self::get('room', array()));
 	}
