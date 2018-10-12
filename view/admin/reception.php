@@ -1,7 +1,7 @@
 <?php $admin = new Reception; 
 // echo "<pre>";
-// print_r(Category::getAll());
-// die;
+$r = new Reservation();
+$date = $r->getFloor();
 ?>
 <?php require_once('includes/includes.header.php'); ?>
 <section id="container" >
@@ -72,20 +72,49 @@
         <!-- <div class="col-lg-1"></div> -->
         <div class="col-lg-12 main-chart">
           
-          <div class="row mtbox mb">
+          <div class="row ">
             <div class="col-md-12">
               <div class="content-panel">
                 <h4><i class="fa fa-angle-right"></i> Rooms List</h4>
-                <hr>
-                <table class="table table-striped">
+                <!-- <hr> -->
+                <table class="table table-bordered" style="overflow: auto;">
+                  <thead>
+                    <th></th>
+                    <?php
+                      while ($date <= $r->getCap()) {
+                        # code...
+                        ?><th><?php echo date('jS F Y',strtotime($date))."\n"; ?></th><?php
+                        $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
+                      }
+                    ?>
+                  </thead>
                   <tbody>
                     <?php foreach (Category::getAll() as $key => $cat_obj):
                       $cat = new Category($cat_obj->id);
-                    ?>
-                      <tr><td><?php echo $cat->getName(); ?></td></tr>
-                      <?php foreach ($cat->getRooms() as $key => $room): ?>
+                      ?>
+                      <tr>
+                        <td class="text-center"><b><?php echo $cat->getName(); ?></b></td>
+                        <?php
+                        $date = $r->getFloor();
+                          while ($date <= $r->getCap()) {
+                            # code...
+                            ?><td></td><?php
+                            $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
+                          }
+                        ?>
+                      </tr>
+                      <?php foreach ($cat->getRooms() as $key2 => $room): ?>
                         <tr>
-                          <td><?php echo $room->number; ?></td>
+                          <td class="text-center active"><?php echo $room->number; ?> <i class="fa fa-bed"></i></td>
+                          <?php
+                          $date = $r->getFloor();
+                            while ($date <= $r->getCap()) {
+                              # code...
+                              ?><td class="text-center <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? 'success' : '' ; ?>" data-container="body" data-toggle="popover" data-placement="bottom" title="Client Info" data-content="<?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? $r->getClientInfo($date, $cat_obj->id) : '' ; ?>"><?php echo date("l", strtotime($date)); ?>
+                              </td><?php
+                              $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
+                            }
+                          ?>
                         </tr>
                       <?php endforeach ?>
                     <?php endforeach ?>
@@ -114,6 +143,7 @@
 <script>
   $().ready(function() {
     // alert();
+    $('[data-toggle="popover"]').popover();
     // $('#menu-toggle-custom').click();
   });
 </script>

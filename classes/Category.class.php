@@ -101,7 +101,7 @@ class Category extends DBO
 	}
 
 	public function getRooms() {
-		if (!is_null($this->id)) {
+		if (is_null($this->id)) {
 			# code...
 			return array();
 		}

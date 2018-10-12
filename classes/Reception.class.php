@@ -13,6 +13,10 @@ class Reception extends Staff
 		}
 	}
 
+	public function getClientInfo($rid) {
+		return self::get('clients', array('id' => $rid));
+	}
+
 	public function checkIn($user, $room) {
 
 	}
