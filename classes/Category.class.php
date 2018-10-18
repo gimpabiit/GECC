@@ -55,7 +55,8 @@ class Category extends DBO
 	}
 
 	public function getAmenityName($id) {
-		return self::get('amenities', array('id' => $id))[0]->name;
+		$name = self::get('amenities', array('id' => $id));
+		return count(self::get('amenities', array('id' => $id))) ? $name[0]->name : '';
 	}
 
 	public function getImages() {
@@ -90,10 +91,6 @@ class Category extends DBO
 			self::dbc()->get('categories', array('id' => $id));
 			return count(self::dbc()->results()) ? self::dbc()->results()[0]->child : '0.00';
 		} 
-	}
-
-	public function getFeatures() {
-		return self::get('amenities', array('category' => $this->id));
 	}
 
 	protected static function dbc() {

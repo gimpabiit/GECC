@@ -1,4 +1,5 @@
 <?php
+$g = new Guest;
 $title = 'GECC - GIMPA Executive Conference Center';
 include "include/head.php";
 ?>
@@ -19,7 +20,7 @@ include "include/head.php";
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-6">
                                 <!-- Titel-->
-                                <h1><span>Welcome to</span> Hotel Empire</h1>
+                                <h1><span>Welcome to</span> GECC</h1>
                                 <!-- Paragraph -->
                                 <p>Our 68 rooms and suites are wonderfully comfortable with a sleek décor.</p>
                                 <!-- Btn -->
@@ -81,8 +82,77 @@ include "include/head.php";
 </div>
 <!-- Banner End-->
 
+ <!-- Search Bar Start -->
+<div>
+    <div class="search-bar">
+        <div class="container">
+            <div class="search-bar-inner">
+                <form action="booking" method="post">
+                    <input type="text" name="_method" hidden value="checkAvailability">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="checkin">Check In</label>
+                                <input class="flatpickr" id="checkin" name="from_date" type="text" placeholder="Checkin Date">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="checkout">Check Out</label>
+                                <input class="flatpickr" id="checkout" name="to_date" type="text" placeholder="Checkout Date">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="room">Room</label>
+                                <select class="form-control" name="cat">
+                                    <?php foreach ($g->getCategories() as $key => $cat): ?>
+                                        <option value="<?php echo $cat->id; ?>"><?php echo $cat->name; ?></option>    
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="guest">Guest</label>
+                                <select class="form-control" name="adult">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="guest">Children</label>
+                                <select class="form-control" name="child">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-danger">Check Availability</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--/ Search Bar End -->
+
 <!-- Search Bar Start -->
-<div class="container">
+<!-- <div class="container">
     <div class="search-bar-vertical">
         <div class="search-bar-vertical-inner">
             <h2 class="visible-lg visible-md">Find your Room</h2>
@@ -127,7 +197,7 @@ include "include/head.php";
             <div class="clearfix"></div>
         </div>
     </div>
-</div>
+</div> -->
 <!--/ Search Bar End -->
 
 <!-- Section-2 Start-->
@@ -888,6 +958,7 @@ include "include/head.php";
 <script src="js/flatpickr.js"></script>
 <!-- Custom javascript -->
 <script src="js/app.js"></script>
+<script src="js/index.js"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

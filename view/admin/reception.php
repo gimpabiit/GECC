@@ -110,7 +110,7 @@ $date = $r->getFloor();
                           $date = $r->getFloor();
                             while ($date <= $r->getCap()) {
                               # code...
-                              ?><td class="text-center <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? 'success' : '' ; ?>" data-container="body" data-toggle="popover" data-placement="bottom" title="Client Info" data-content="<?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? $r->getClientInfo($date, $cat_obj->id) : '' ; ?>"><?php echo date("l", strtotime($date)); ?>
+                              ?><td class="text-center <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? 'danger' : '' ; ?>" data-container="body" data-toggle="popover" data-placement="bottom" title="Client Info" data-content="<?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? $r->getClientInfo($date, $cat_obj->id) : '' ; ?>"><?php echo date("l", strtotime($date)); ?>
                               </td><?php
                               $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
                             }

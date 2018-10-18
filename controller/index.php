@@ -3,7 +3,6 @@ require_once('../core/init.php');
 Redirect::view('application/json');
 
 $user = new User;
-$admin = new Admin;
 $data = array();
 $db = DB::getInstance();
 $url = Input::getAll('get');

@@ -67,7 +67,7 @@ include "include/head.php";
                                         <div class="price">
                                             Rates from  <span class="amount"> $<?php echo $category->getPrice(); ?>.00</span> per night
                                         </div>
-                                        <button class="btn btn-fill" type="button" data-toggle="modal" data-target="#myModal">view Room Details</button>
+                                        <a target="_blank" class="btn btn-fill" href="room-details?rid=<?php echo $room->id; ?>">View Details</a>
                                     </div>
                                 </div>
                             </div>

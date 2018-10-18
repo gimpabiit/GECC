@@ -143,6 +143,7 @@ require_once('includes/includes.header.php'); ?>
     				},
     				error: function (e) {
     					alert('error', e);
+              console.log(e);
     				}
     			});
     		});

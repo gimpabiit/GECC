@@ -3,6 +3,7 @@ require_once('../core/init.php');
 // Redirect::view('application/json');
 
 $user = new User;
+$g = new Guest();
 $data = array();
 $db = DB::getInstance();
 $url = Input::getAll('get');
@@ -10,18 +11,19 @@ $url = Input::getAll('get');
 $router = new Router($url['url']);
 $table = $router->pop();
 
-// echo "<pre>";
-// if (Input::exists('post')) {
-// 		# code...
-// 	echo "All posts";
-// 	var_dump(Input::getAll('post'));
-// }
-// if (Input::exists('file')) {
-// 		# code...
-// 	echo "all files";
-// 	var_dump(Input::getAll('file'));
-// }
-// die;
+echo "<pre>";
+if (Input::exists('post')) {
+		# code...
+	// echo "All posts";
+	var_dump(Input::getAll('post'));
+	// var_dump();
+}
+if (Input::exists('file')) {
+		# code...
+	echo "all files";
+	var_dump(Input::getAll('file'));
+}
+die;
 
 if (Input::exists('post')) {
 	# code...
@@ -32,35 +34,13 @@ if (Input::exists('post')) {
 		$where = array('id' => $router->pop());
 		unset($params['_method']);
 		switch ($_method) {
-			case 'put':
+			case 'checkAvailability':
 				# code...
-				$data['where'] = $where;
-				$data['params'] = $params;
-				$db->update($table, $where, $params);
-				$db->get($table, $where);
-				$data[] = $db->results();
+				$data[] = $g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Input::get('category'));
 				break;
-			
-			case 'delete':
-				# code...
-				$data[] = $db->delete($table, $where);
-				// $data[] = $db->delete($table, $where);
-				// echo "execute delete request";
-				break;
-
-			case 'login':
-				# code...
-				// echo "Execute New Product Addition";
-				$data[] = $user->signUp($params);
-				break;
-
-			case 'cart':
-				# code...
-				$data[] = $user->addToCart($params);
-				break;
-
 		}
-	} else {
+	}
+	else {
 		// echo('sign up intended');
 		if ($router->hasJuice()) {
 			# code...

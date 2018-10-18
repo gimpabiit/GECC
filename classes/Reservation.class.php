@@ -36,7 +36,11 @@ class Reservation extends DBO
 	public function getCap() {
 		return $this->cap;
 	}
+
 	public function getFloor() {
 		return $this->floor;
 	}
+
+	public function validate($room, $guests) {}
+	
 }
