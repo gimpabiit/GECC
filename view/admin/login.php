@@ -56,7 +56,24 @@
     <script>
         $.backstretch("assets/img/login-bg.jpg", {speed: 500});
     </script>
-
+    <script>
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+        var _data = $(this).serialize();
+        $.ajax({
+          url: '/controller/',
+          method: 'post',
+          data: _data,
+          success: function(d) {
+           if(d[0].indexOf('/cpanel/') >= 0) {
+                window.location.href = d[0];
+              } else {
+                alert('error logging in');
+              }
+          } 
+        });
+      })
+    </script>
 
   </body>
 </html>

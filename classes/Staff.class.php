@@ -46,11 +46,9 @@ class Staff extends DBO
 		}
 		if ($this->hasLoggedIn()) {
 			# code...
-			$this->sendToPage($this->getUser());
-			return true;
-
+			return $this->sendToPage($this->getUser());
 		}
-		return null;
+		return false;
 	}
 
 	public function verify($params) {
@@ -74,9 +72,7 @@ class Staff extends DBO
 		// var_dump($params);
 		// $staff = get('staff')[0]->id;
 
-		self::dbc()->update('staff', array('email' => $params['email']), $params);
-		die;
-		if (!self::dbc()->error()) {
+		if (count(self::dbc()->update('staff', array('email' => $params['email']), $params))) {
 			# code...
 			$login = $this->login(array('email' => $params['email'], 'password' => $iniPass));
 			return $login;
@@ -116,7 +112,7 @@ class Staff extends DBO
 			// 	# code...
 			// 	break;
 		}
-		Redirect::to($url);
+		return $url;
 	}
 
 	public static function getUser() {

@@ -35,12 +35,12 @@
         <h5 class="centered">Administrator</h5>
         
         <li class="mt">
-          <a class="active" href="index.html">
+          <a class="active" href="#">
             <i class="fa fa-ellipsis-v"></i>
             <span>Dashboard</span>
           </a>
         </li>
-        <li class="mt">
+        <!-- <li class="mt">
           <a class="" href="index.html">
             <i class="fa fa-clone"></i>
             <span>Categories</span>
@@ -57,7 +57,7 @@
             <i class="fa fa-archway"></i>
             <span>Halls</span>
           </a>
-        </li>
+        </li> -->
       </ul>
       <!-- sidebar menu end-->
     </div>
@@ -104,13 +104,15 @@
               <div class="row mt">
                 <?php 
                 $cats = $admin->getCategory();
-                foreach ($cats as $key => $value): ?>
+                foreach ($cats as $key => $value): 
+                  $t = new Category($value->id);
+                  ?>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
                   <div class="project-wrapper">
                       <div class="project">
                           <div class="photo-wrapper">
                               <div class="photo">
-                                <a class="fancybox" href="assets/img/portfolio/port01.jpg"><img class="img-responsive" src="assets/img/portfolio/port01.jpg" alt=""></a>
+                                <a class="fancybox" href="<?php echo $t->getImages()[0]->image; ?>"><img class="img-responsive" style="height: 350px;" src="<?php echo $t->getImages()[0]->image; ?>" alt=""></a>
                               </div>
                               <div class="overlay"></div>
                           </div>
@@ -160,29 +162,7 @@
             </div>
           </div>        
                       
-        </div><!-- /col-lg-9 END SECTION MIDDLE -->
-                                  
-                                  
-        <!-- **********************************************************************************************************************************************************
-        RIGHT SIDEBAR CONTENT
-        *********************************************************************************************************************************************************** -->
-        
-        <!-- CALENDAR-->
-        <!-- <div class="col-lg-3 ds">
-          <div id="calendar" class="mb" style="height: 100vh;">
-            <div class="panel green-panel no-margin">
-              <div class="panel-body">
-                <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
-                  <div class="arrow"></div>
-                  <h3 class="popover-title" style="disadding: none;"></h3>
-                  <div id="date-popover-content" class="popover-content"></div>
-                </div>
-                <div id="my-calendar"></div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- /col-lg-3 -->
+        </div>
       </div><!--/row -->
     </section>
   </section>
@@ -293,7 +273,7 @@
 </div>
 
 <div class="modal fade" id="cat-img-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body">
         <img src="" class="img-responsive cat-img">

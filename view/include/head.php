@@ -1,3 +1,8 @@
+<?php if (!isset($g)) {
+	# code...
+	$g = new Guest;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,3 +41,78 @@
 	    <script src="js/respond.min.js"></script>
 	    <![endif]-->
 </head>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+        <form class="form" action="sign" method="post">
+          <div class="modal-body">
+            <div class="container-fluid">
+                <input type="text" name="_method" value="register" hidden>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="fname">Firstname</label>
+                            <input required type="text" name="fname" id="fname" class="form-control" placeholder="e.g. John">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="lname">Lastname</label>
+                            <input required type="text" name="lname" id="lname" class="form-control" placeholder="e.g. Snow">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input required type="email" name="email" id="email" class="form-control" placeholder="e.g. john.snow@stark.com">
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input required type="text" name="phone" id="phone" class="form-control" placeholder="e.g. 024 xxx xxxx">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="addrtess">Address</label>
+                            <input required type="text" name="address" id="addrtess" class="form-control" placeholder="e.g. P. O. Box 123">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input required type="text" name="city" id="city" class="form-control" placeholder="e.g. Accra">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input required type="text" name="country" id="country" class="form-control" placeholder="e.g. Ghana">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-fill btn-default" style="color: #2a2a2a;" data-dismiss="modal"><b>Close</b></button>
+            <button type="submit" class="btn btn-fill pull-right">Sign Up</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

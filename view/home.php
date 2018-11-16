@@ -5,7 +5,7 @@ include "include/head.php";
 ?>
 <body>
 <!-- Header Start -->
-<?php include "include/header.html" ?>
+<?php include "include/header.php" ?>
 <!-- Header End -->
 
 <!-- Banner Start-->
@@ -19,12 +19,14 @@ include "include/head.php";
                     <div class="banner-slider-inner-2 text-right">
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-6">
-                                <!-- Titel-->
-                                <h1><span>Welcome to</span> GECC</h1>
-                                <!-- Paragraph -->
-                                <p>Our 68 rooms and suites are wonderfully comfortable with a sleek décor.</p>
-                                <!-- Btn -->
-                                <a href="rooms-list.html" class="btn btn-fill">view all rooms</a>
+                                <div class="breadcrumb-area">
+                                    <!-- Titel-->
+                                    <h1><span>Welcome to</span> GECC</h1>
+                                    <!-- Paragraph -->
+                                    <p>Our 68 rooms and suites are wonderfully comfortable with a sleek décor.</p>
+                                    <!-- Btn -->
+                                    <a href="rooms-list.html" class="btn btn-fill">view all rooms</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -36,12 +38,14 @@ include "include/head.php";
                     <div class="banner-slider-inner-2">
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-6">
-                                <!-- Titel-->
-                                <h1><span>It's time to </span> relax!</h1>
-                                <!-- Paragraph -->
-                                <p>More great experience than hotel Both a destination and a journey</p>
-                                <!-- Btn -->
-                                <a href="service.html" class="btn btn-fill">view our services</a>
+                                <div class="breadcrumb-area">
+                                    <!-- Titel-->
+                                    <h1><span>It's time to </span> relax!</h1>
+                                    <!-- Paragraph -->
+                                    <p>More great experience than hotel Both a destination and a journey</p>
+                                    <!-- Btn -->
+                                    <a href="about" class="btn btn-fill">view our services</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,12 +57,14 @@ include "include/head.php";
                     <div class="banner-slider-inner-2">
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-6">
-                                <!-- Titel-->
-                                <h1><span>It's time to </span> feel!</h1>
-                                <!-- Paragraph -->
-                                <p>More great experience than hotel Both a destination and a journey</p>
-                                <!-- Btn -->
-                                <a href="rooms-list.html" class="btn btn-fill">view our services</a>
+                                <div class="breadcrumb-area">
+                                    <!-- Titel-->
+                                    <h1><span>It's time to </span> feel!</h1>
+                                    <!-- Paragraph -->
+                                    <p>More great experience than hotel Both a destination and a journey</p>
+                                    <!-- Btn -->
+                                    <a href="rooms-list.html" class="btn btn-fill">view our services</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,13 +99,14 @@ include "include/head.php";
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="checkin">Check In</label>
-                                <input class="flatpickr" id="checkin" name="from_date" type="text" placeholder="Checkin Date">
+                                <input class="flatpickr" id="checkin" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>" required name="from_date" type="text" placeholder="Checkin Date">
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="checkout">Check Out</label>
-                                <input class="flatpickr" id="checkout" name="to_date" type="text" placeholder="Checkout Date">
+                                <input class="flatpickr" id="checkout" value="<?php $datetime = new DateTime('tomorrow');
+echo $datetime->format('Y-m-d'); ?>" required name="to_date" type="text" placeholder="Checkout Date">
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -952,7 +959,11 @@ include "include/head.php";
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-slider.js"></script>
-
+<script>
+    $().ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 <script src="js/flatpickr.js"></script>
@@ -968,6 +979,86 @@ include "include/head.php";
     ga('create', 'UA-89110077-1', 'auto');
     ga('send', 'pageview');
 
+</script>
+<script>
+    var dates = {
+        convert:function(d) {
+            // Converts the date in d to a date-object. The input can be:
+            //   a date object: returned without modification
+            //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+            //   a number     : Interpreted as number of milliseconds
+            //                  since 1 Jan 1970 (a timestamp) 
+            //   a string     : Any format supported by the javascript engine, like
+            //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+            //  an object     : Interpreted as an object with year, month and date
+            //                  attributes.  **NOTE** month is 0-11.
+            return (
+                d.constructor === Date ? d :
+                d.constructor === Array ? new Date(d[0],d[1],d[2]) :
+                d.constructor === Number ? new Date(d) :
+                d.constructor === String ? new Date(d) :
+                typeof d === "object" ? new Date(d.year,d.month,d.date) :
+                NaN
+            );
+        },
+        compare:function(a,b) {
+            // Compare two dates (could be of any type supported by the convert
+            // function above) and returns:
+            //  -1 : if a < b
+            //   0 : if a = b
+            //   1 : if a > b
+            // NaN : if a or b is an illegal date
+            // NOTE: The code inside isFinite does an assignment (=).
+            return (
+                isFinite(a=this.convert(a).valueOf()) &&
+                isFinite(b=this.convert(b).valueOf()) ?
+                (a>b)-(a<b) :
+                NaN
+            );
+        },
+        inRange:function(d,start,end) {
+            // Checks if date in d is between dates in start and end.
+            // Returns a boolean or NaN:
+            //    true  : if d is between start and end (inclusive)
+            //    false : if d is before start or after end
+            //    NaN   : if one or more of the dates is illegal.
+            // NOTE: The code inside isFinite does an assignment (=).
+           return (
+                isFinite(d=this.convert(d).valueOf()) &&
+                isFinite(start=this.convert(start).valueOf()) &&
+                isFinite(end=this.convert(end).valueOf()) ?
+                start <= d && d <= end :
+                NaN
+            );
+        }
+    }
+    $('[name="from_date"]').on('change', function() {
+        var today = new Date();
+        var nextDay = new Date();
+        var tmr = new Date();
+        var fd = new Date($(this).val());
+        tmr.setDate(today.getDate()+1);
+        nextDay.setDate(fd.getDate());
+        if(dates.compare(today, fd) < 0) {
+            $('[name="to_date"]').val(nextDay.getFullYear()+'-'+(nextDay.getMonth()+1)+'-'+(nextDay.getDate()+1));
+        } else {
+            $(this).val(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1));
+            $('[name="to_date"]').val(tmr.getFullYear()+'-'+(tmr.getMonth()+1)+'-'+(tmr.getDate()+1));
+        }
+        // $('[name="to_date"]').val(tomorrow);
+        // console.log(fd);
+        // console.log(new Date(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1)));
+        // console.log(dates.compare(fd, today));
+    });
+    $('[name="to_date"]').on('change', function() {
+        var day = new Date($('[name="from_date"]').val());
+        var nxt_day = new Date($('[name="to_date"]').val());
+        day.setDate(day.getDate());
+        if(dates.compare(nxt_day, day) > 0) {
+        } else {
+            $(this).val(day.getFullYear()+'-'+(day.getMonth()+1)+'-'+(day.getDate()+1));
+        }
+    });
 </script>
 
 </body>

@@ -10,20 +10,6 @@ $url = Input::getAll('get');
 $router = new Router($url['url']);
 $table = $router->pop();
 
-// echo "<pre>";
-// if (Input::exists('post')) {
-// 		# code...
-// 	// echo "All posts";
-// 	$data[] = Input::getAll('post');
-// }
-// if (Input::exists('file')) {
-// 		# code...
-// 	// echo "all files";
-// 	$data[] = Input::getAll('file');
-// }
-// print_r($data);
-// die;
-
 if (Input::exists('post')) {
 	# code...
 	if (Input::has('_method')) {

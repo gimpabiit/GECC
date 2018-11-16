@@ -23,6 +23,7 @@ require_once('includes/includes.header.php'); ?>
 		        <h2 class="form-login-heading">Verify Email</h2>
 		        <div class="login-wrap">
 		            <input type="email" required name="email" class="form-control" placeholder="User Email" autofocus>
+                <small id="emailHelp" class="form-text text-warning">Enter your email to continue verification.</small>
 		            <br>
 			        <div class="hidden" style="">
 			        	<div class="form-group">
@@ -38,14 +39,14 @@ require_once('includes/includes.header.php'); ?>
 			        </div>
 		            <hr>
 		            
-		            <div class="login-social-link centered">
+		            <!-- <div class="login-social-link centered">
 		            <p>Already verified your Account?</p>
 		                <a href="login" class="btn btn-facebook"><i class="fa fa-door-open"></i> Login</a>
 		                <a href="/" class="btn btn-twitter"><i class="fa fa-home"></i> Go Home</a>
-		            </div>
+		            </div> -->
 		            <div class="registration">
-		                GECC Online Employee Without an Account?<br/>
-		                <a data-toggle="modal" href="#requestModal"> Request For One</a>
+		                For GECC Online Employees With an Accounts Only<br/>
+		                <!-- <a data-toggle="modal" href="#requestModal"> Request For One</a> -->
 		            </div>
 		
 		        </div>
@@ -147,6 +148,30 @@ require_once('includes/includes.header.php'); ?>
     				}
     			});
     		});
+
+        $('form').on('submit', function(e) {
+          e.preventDefault();
+          // alert();
+          // return false;
+          var _data = $(this).serialize();
+          $.ajax({
+            url: '/controller/',
+            data: _data,
+            method: 'post',
+            success: function (d) {
+              // body...
+              if(d[0].indexOf('/cpanel/') >= 0) {
+                window.location.href = d[0];
+              } else {
+                alert('error signing Up');
+              }
+            },
+            error: function (e) {
+              // body...
+              console.log(e);
+            }
+          })
+        });
     	});
     </script>
 

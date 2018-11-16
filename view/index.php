@@ -7,7 +7,7 @@
     
 <body>
 <!-- Header Start -->
-<?php include "include/header.html" ?>
+<?php include "include/header.php" ?>
 <!-- Header End -->
 
 <!-- Banner Start-->
@@ -43,7 +43,7 @@
                                 <!-- Paragraph -->
                                 <p>More great experience than hotel Both a destination and a journey</p>
                                 <!-- Btn -->
-                                <a href="service.html" class="btn btn-fill">view our services</a>
+                                <a href="about" class="btn btn-fill">view our services</a>
                             </div>
                         </div>
                     </div>
@@ -885,7 +885,11 @@
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-slider.js"></script>
-
+<script>
+    $().ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 <script src="js/flatpickr.js"></script>

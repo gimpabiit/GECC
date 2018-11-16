@@ -14,7 +14,7 @@ include "include/head.php";
 ?>
 <body>
 <!-- Header Start -->
-<?php include "include/header.html" ?>
+<?php include "include/header.php" ?>
 <!-- Header End -->
 
 <!-- Page Banner Start -->
@@ -181,7 +181,7 @@ include "include/head.php";
                         <h3>SEND US AN EMAIL</h3>
                         <p>Donec non luctus turpis. Curabitur ut diam a turpis hendrerit aliquam. Nullam blandit bibendum turpis quis consequat. Nunc rhoncus neque ut quam venenatis consequat. Sed mollis facilisis consectetur. Curabitur purus ipsum, hendrerit id iaculis sed, congue facilisis dolor. Mauris aliquet tristique lacus vel pretium.</p>
                     </div>
-                    <form action="http://hotel-empire.sohelrana.me/index.html">
+                    <form action="">
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group name">
@@ -493,7 +493,11 @@ include "include/head.php";
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-slider.js"></script>
-
+<script>
+    $().ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 <script src="js/flatpickr.js"></script>
@@ -514,26 +518,27 @@ include "include/head.php";
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content" style="border-radius: 0px;">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h3 class="modal-title text-center" id="exampleModalLabel">Check Availability</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         </button>
       </div>
         <form action="booking" method="post" class="container-fluid">
+            <br>
             <input type="text" name="_method" hidden value="checkAvailability">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="checkin">Check In</label>
-                        <input class="flatpickr" id="checkin" name="from_date" type="text" placeholder="Checkin Date">
+                        <input class="flatpickr form-control" id="checkin" name="from_date" type="date" placeholder="Checkin Date">
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="checkout">Check Out</label>
-                        <input class="flatpickr" id="checkout" name="to_date" type="text" placeholder="Checkout Date">
+                        <input class="flatpickr form-control" id="checkout" name="to_date" type="date" placeholder="Checkout Date">
                     </div>
                 </div>
                 <div class="col-md-12">

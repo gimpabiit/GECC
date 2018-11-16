@@ -6,7 +6,7 @@ include "include/head.php";
 
 <body>
 <!-- Header Start -->
-<?php include "include/header.html" ?>
+<?php include "include/header.php" ?>
 <!-- Header End -->
 
 <!-- Page Banner Start -->
@@ -291,7 +291,11 @@ include "include/head.php";
 <script src="js/jquery-2.2.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-slider.js"></script>
-
+<script>
+    $().ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>
 <!-- Custom javascript -->

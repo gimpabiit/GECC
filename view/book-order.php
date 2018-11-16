@@ -2,9 +2,9 @@
 $g = new Guest;
 if (Input::has('_method')) {
     # code...
-    // var_dump(Input::getAll());
-    // die;
-    $g->register(array('fullname' => Input::get('fname'). ' ' . Input::get('lname'), 'email' => Input::get('email'), 'address' => Input::get('address'), 'city' => Input::get('city'), 'phone' => Input::get('phone'), 'country' => Input::get('country')));
+    echo "<pre>";
+    print_r(Input::getAll());
+    die;
 } else {
 Redirect::to('home');
 }
@@ -13,7 +13,7 @@ include "include/head.php";
 ?>
 <body>
 <!-- Header Start -->
-<?php include "include/header.html" ?>
+<?php include "include/header.php" ?>
 <!-- Blog Banner Start -->
 <div class="blog-banner">
     <div class="container">
@@ -29,9 +29,6 @@ include "include/head.php";
 </div>
 <!-- Blog Banner End -->
 
-<?php
-if($g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Input::get('cat'))) {
-?>
 <!-- Blog Body Start -->
 <div class="blog-body">
     <div class="container">
@@ -203,10 +200,6 @@ if($g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Inp
     </div>
 </div>
 <!-- Blog Body End -->
-
-<?php
-}
-?>
 
 <!-- Footer Start-->
 <footer class="main-footer clearfix">

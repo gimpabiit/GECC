@@ -1,6 +1,6 @@
 <?php 
 require_once('../core/init.php');
-// Redirect::view('application/json');
+Redirect::view('application/json');
 
 $user = new User;
 $g = new Guest();
@@ -11,19 +11,19 @@ $url = Input::getAll('get');
 $router = new Router($url['url']);
 $table = $router->pop();
 
-echo "<pre>";
-if (Input::exists('post')) {
-		# code...
-	// echo "All posts";
-	var_dump(Input::getAll('post'));
-	// var_dump();
-}
-if (Input::exists('file')) {
-		# code...
-	echo "all files";
-	var_dump(Input::getAll('file'));
-}
-die;
+// echo "<pre>";
+// if (Input::exists('post')) {
+// 		# code...
+// 	// echo "All posts";
+// 	var_dump(Input::getAll('post'));
+// 	// var_dump();
+// }
+// if (Input::exists('file')) {
+// 		# code...
+// 	echo "all files";
+// 	var_dump(Input::getAll('file'));
+// }
+// die;
 
 if (Input::exists('post')) {
 	# code...
@@ -37,6 +37,10 @@ if (Input::exists('post')) {
 			case 'checkAvailability':
 				# code...
 				$data[] = $g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Input::get('category'));
+				break;
+			case 'verify_account':
+				# code...
+				$data[] = (md5($params['email']) == $params['hash']) ? true : false;
 				break;
 		}
 	}

@@ -37,23 +37,16 @@ $date = $r->getFloor();
         
         <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
         <h5 class="centered">Receptionist</h5>
-        
-        <li class="mt">
-          <a class="active" href="index.html">
-            <i class="fa fa-ellipsis-v"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-        <li class="mt">
+        <!-- <li class="mt">
           <a class="" href="index.html">
             <i class="fa fa-door-open"></i>
             <span>check in</span>
           </a>
-        </li>
+        </li> -->
         <li class="mt">
-          <a class="" href="index.html">
-            <i class="fa fa-door-closed"></i>
-            <span>check out</span>
+          <a class="" href="#">
+            <i class="fa fa-users"></i>
+            <span>Add Client(s)</span>
           </a>
         </li>
       </ul>
@@ -93,12 +86,12 @@ $date = $r->getFloor();
                       $cat = new Category($cat_obj->id);
                       ?>
                       <tr>
-                        <td class="text-center"><b><?php echo $cat->getName(); ?></b></td>
+                        <td class="text-center" style="border: 0px;"><b><?php echo $cat->getName(); ?></b></td>
                         <?php
                         $date = $r->getFloor();
                           while ($date <= $r->getCap()) {
                             # code...
-                            ?><td></td><?php
+                            ?><td style="border: 0px;"></td><?php
                             $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
                           }
                         ?>
@@ -110,7 +103,7 @@ $date = $r->getFloor();
                           $date = $r->getFloor();
                             while ($date <= $r->getCap()) {
                               # code...
-                              ?><td class="text-center <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? 'danger' : '' ; ?>" data-container="body" data-toggle="popover" data-placement="bottom" title="Client Info" data-content="<?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? $r->getClientInfo($date, $cat_obj->id) : '' ; ?>"><?php echo date("l", strtotime($date)); ?>
+                              ?><td style="color: #d2d2d2;" class="text-center <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? 'info' : '' ; ?>" data-container="body" <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? 'data-toggle="popover"  data-html="true"' : '' ; ?>  data-placement="bottom" title="Details"  data-content="Client Info: <?php echo ($key2 == $r->isMade($date, $cat_obj->id) - 1) ? $r->getClientInfo($date, $cat_obj->id) : '' ; ?><hr><button class='btn btn-success'>Check In</button> <button class='btn btn-danger'>Check Out</button>"><?php echo date("jS", strtotime($date)); ?>
                               </td><?php
                               $date = date("Y-m-d", strtotime("+1 day", strtotime($date)));
                             }
@@ -144,6 +137,5 @@ $date = $r->getFloor();
   $().ready(function() {
     // alert();
     $('[data-toggle="popover"]').popover();
-    // $('#menu-toggle-custom').click();
   });
 </script>

@@ -5,7 +5,7 @@ include "include/head.php";
 ?>
 <body>
 <!-- Header Start -->
-<?php //include "include/header.html" ?>
+<?php //include "include/header.php" ?>
 <body>
 <!-- Page Content 404 Start-->
 <div class="page-content-404">

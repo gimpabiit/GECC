@@ -54,6 +54,7 @@
 	
 	<script type="application/javascript">
         $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
             $("#date-popover").popover({html: true, trigger: "manual"});
             $("#date-popover").hide();
             $("#date-popover").click(function (e) {
@@ -85,6 +86,24 @@
             var to = $("#" + id).data("to");
             console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
         }
+        
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                method: 'post',
+                success: function(d) {
+                    location.reload();
+                },
+                error: function (e) {
+                    // body...
+                    console.log(e);
+                    alert('error performing request');
+                }
+            });
+        });
     </script>
 
   
