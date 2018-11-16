@@ -41,6 +41,17 @@
 	    <script src="js/respond.min.js"></script>
 	    <![endif]-->
 </head>
+<div class="" style="margin: 0px; padding: 0px;">
+    <nav class="navbar navbar-inverse" style="margin: 0px; border-radius: 0px;">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header pull-right">
+        <!-- <span class="">024 xxx xxxx</span> | <span class="">024 xxx xxxx</span> -->
+      <a class="navbar-brand" href="#"><i class="fa fa-phone"></i> 024 xxx xxxx</a><!--  | <a class="navbar-brand" href="#"><i class="fa fa-phone"></i> 024 xxx xxxx</a> -->
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -54,13 +65,21 @@
             <div class="container-fluid">
                 <input type="text" name="_method" value="register" hidden>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-2">
+                        <label>Title</label>
+                        <select class="form-control" name="title">
+                            <option value="Mr.">Mr.</option>
+                            <option value="Ms.">Mrs./Ms./Miss</option>
+                            <option value="Dr.">Dr.</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-5">
                         <div class="form-group">
                             <label for="fname">Firstname</label>
                             <input required type="text" name="fname" id="fname" class="form-control" placeholder="e.g. John">
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="form-group">
                             <label for="lname">Lastname</label>
                             <input required type="text" name="lname" id="lname" class="form-control" placeholder="e.g. Snow">

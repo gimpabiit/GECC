@@ -1,10 +1,15 @@
 <?php
 $g = new Guest;
+// print_r(Input::getAll());
+// die;
 if (!Input::exists()) {
     # code...
     Redirect::to('home');
 }
 $c = new Category(Input::get('cat'));
+$fd = date_create(Input::get('from_date'));
+$td = date_create(Input::get('to_date'));
+$diff = date_diff($fd, $td)->days;
 if ($g->isSignedIn()) {
     # code...
     if ($g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Input::get('cat'))) {
@@ -40,112 +45,169 @@ include "include/head.php";
             View Room Details
           </button>
         </p>
-        <div class="collapse" id="collapseExample">
-          <div class="row">
-                <div class="col-lg-12 col-md-12 col-xs-12">
-                    <!-- Blog Box Start -->
-                    <div class="thumbnail blog-box clearfix">
-                        <img src="<?php echo $c->getImages()[0]->image; ?>" alt="5.jpg">
-                        <!-- detail -->
-                        <div class="caption detail">
-                            <h1 class="title">
-                                <a href="#"><?php echo $c->getName(); ?></a>
-                            </h1>
-                            <h2>
-                                $<?php echo $c->getPrice(); ?>.00
-                            </h2>
-                            <!-- paragraph -->
-                            <p><?php echo $c->getDescription(); ?></p>
+    </div>   
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-xs-12">
+                <div class="collapse" id="collapseExample">
+                  <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                            <!-- Blog Box Start -->
+                            <div class="thumbnail blog-box clearfix">
+                                <img src="<?php echo $c->getImages()[0]->image; ?>" alt="5.jpg">
+                                <!-- detail -->
+                                <div class="caption detail">
+                                    <h1 class="title">
+                                        <a href="#"><?php echo $c->getName(); ?></a>
+                                    </h1>
+                                    <h2>
+                                        $<?php echo $c->getPrice(); ?>.00
+                                    </h2>
+                                    <!-- paragraph -->
+                                    <p><?php echo $c->getDescription(); ?></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div> 
-    </div>   
-    <?php if ($g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Input::get('cat'))): ?>
-        <?php if (!$g->isSignedIn()): ?>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-xs-12">
-                        <form class="form" action="book-order" method="post">
-                            <legend class="title">Enter Guest Details To Continue Booking</legend>
-                            <input type="text" name="_method" value="register" hidden>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="fname">Firstname</label>
-                                        <input required type="text" name="fname" id="fname" class="form-control" placeholder="e.g. John">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="lname">Lastname</label>
-                                        <input required type="text" name="lname" id="lname" class="form-control" placeholder="e.g. Snow">
-                                    </div>
-                                </div>
+                <?php if ($g->checkRoomAvailability(Input::get('from_date'), Input::get('to_date'), Input::get('cat'))): ?>
+                <form class="form" action="book-order" method="post">
+                    <legend class="title">Enter Guest Details To Continue Booking</legend>
+                    <input type="text" name="_method" value="register" hidden>
+                    <?php if (!$g->isSignedIn()): ?> 
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label>Title</label>
+                            <select class="form-control" name="title">
+                                <option value="Mr.">Mr.</option>
+                                <option value="Ms.">Mrs./Ms./Miss</option>
+                                <option value="Dr.">Dr.</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label for="fname">Firstname</label>
+                                <input required type="text" name="fname" id="fname" class="form-control" placeholder="e.g. John">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-7">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input required type="email" name="email" id="email" class="form-control" placeholder="e.g. john.snow@stark.com">
-                                    </div>
-                                </div>
-                                <div class="col-lg-5">
-                                    <div class="form-group">
-                                        <label for="phone">Phone</label>
-                                        <input required type="text" name="phone" id="phone" class="form-control" placeholder="e.g. 024 xxx xxxx">
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label for="lname">Lastname</label>
+                                <input required type="text" name="lname" id="lname" class="form-control" placeholder="e.g. Snow">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for="addrtess">Address</label>
-                                        <input required type="text" name="address" id="addrtess" class="form-control" placeholder="e.g. P. O. Box 123">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input required type="text" name="city" id="city" class="form-control" placeholder="e.g. Accra">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="country">Country</label>
-                                        <input required type="text" name="country" id="country" class="form-control" placeholder="e.g. Ghana">
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="text" hidden name="from_date" />
-                            <input type="text" hidden name="to_date" />
-                            <input type="text" hidden name="cat" />
-                            <input type="text" hidden name="adult" />
-                            <input type="text" hidden name="child" />
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-fill pull-right">Book Room</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Program (optional)</label>
+                                <input type="text" name="program" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Company (optional)</label>
+                                <input type="text" name="program" class="form-control">
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        <?php endif ?>
-    <?php else: ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-8 col-xs-12">
-                    <p>Sorry, This room is not available for reservations</p>
-                    <a href="rooms-list" class="btn btn-fill">Click here to check out other options</a> 
-                </div>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input required type="email" name="email" id="email" class="form-control" placeholder="e.g. john.snow@stark.com">
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input required type="text" name="phone" id="phone" class="form-control" placeholder="e.g. 024 xxx xxxx">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="addrtess">Address</label>
+                                <input required type="text" name="address" id="addrtess" class="form-control" placeholder="e.g. P. O. Box 123">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input required type="text" name="city" id="city" class="form-control" placeholder="e.g. Accra">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input required type="text" name="country" id="country" class="form-control" placeholder="e.g. Ghana">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Reason for Stay (optional)</label>
+                            <textarea class="form-control" rows="7"></textarea>
+                        </div>
+                    </div>
+                    <?php endif ?>
+                    <div class="row">
+                        <input type="text" hidden name="from_date" value="<?php echo Input::get('from_date'); ?>" />
+                        <input type="text" hidden name="to_date" value="<?php echo Input::get('to_date'); ?>" />
+                        <input type="text" hidden name="cat" value="<?php echo Input::get('cat'); ?>" />
+                        <input type="text" hidden name="adult" value="<?php echo Input::get('adult'); ?>" />
+                        <input type="text" hidden name="child" value="<?php echo Input::get('child'); ?>" />
+                        <div class="row">
+                            <div class="text-center" style="margin-top: 15px;">
+                                <button type="submit" class="btn btn-fill ">Book Room</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <?php else: ?>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-xs-12">
+                                <p>Sorry, This room is not available for reservations</p>
+                                <a href="rooms-list" class="btn btn-fill">Click here to check out other options</a> 
+                            </div>
 
+                        </div>
+                    </div> 
+                <?php endif ?> 
             </div>
-        </div> 
-    <?php endif ?>    
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <h3>Reservation Details</h3><hr>
+                <div class="list-group" style="">
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading"><b>Arrival Date</b></h4>
+                    <p class="list-group-item-text"><?php echo date_format(date_create(Input::get('from_date')), 'jS F Y') ?></p>
+                  </a>
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading"><b>Nights</b></h4>
+                    <p class="list-group-item-text"><?php echo $diff; ?></p>
+                  </a>
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading"><b>Depature Date</b></h4>
+                    <p class="list-group-item-text"><?php echo date_format(date_create(Input::get('to_date')), 'jS F Y') ?></p>
+                  </a>
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading"><b>Room </b></h4>
+                    <p class="list-group-item-text"><?php echo $c->getName(); ?></p>
+                  </a>
+                  <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading"><b>Guests</b></h4>
+                    <p class="list-group-item-text">Adults: <?php echo Input::get('adult'); ?>, Chlidren: <?php echo Input::get('child'); ?></p>
+                  </a>
+                  <a href="#" class="list-group-item active">
+                    <p class="list-group-item-text">Total Price</p>
+                    <h4 class="list-group-item-heading text-right"><b><span>USD <?php echo number_format((float)$diff * $c->getPrice(), 2, '.', ''); ?></span></b></h4>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </div>   
 </div>
 <!-- Blog body End End -->
 

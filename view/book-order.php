@@ -1,13 +1,20 @@
 <?php
 $g = new Guest;
 if (Input::has('_method')) {
-    # code...
-    echo "<pre>";
-    print_r(Input::getAll());
-    die;
+    // code...
+    if($g->isSignedIn()) {
+        $reservation = $g->makeReservation(Input::get('from_date'), Input::get('to_date'), Input::get('cat'), $g->getKey());
+    } else {
+        $user = $g->register(array('fullname' => Input::get('title'). ' ' . Input::get('fname'). ' ' . Input::get('lname'), 'email' => Input::get('email'), 'address' => Input::get('address'), 'city' => Input::get('city'), 'phone' => Input::get('phone'), 'country' => Input::get('country')));
+        $reservation = $g->makeReservation(Input::get('from_date'), Input::get('to_date'), Input::get('cat'));
+    }
 } else {
 Redirect::to('home');
 }
+$c = new Category(Input::get('cat'));
+$fd = date_create(Input::get('from_date'));
+$td = date_create(Input::get('to_date'));
+$diff = date_diff($fd, $td)->days;
 $title = 'GECC - GIMPA Executive Conference Center';
 include "include/head.php";
 ?>
@@ -19,8 +26,8 @@ include "include/head.php";
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Reservation Invoice</h2>
-                <a href="index" class="home">Go back Home</a>
+                <h2>Room(s) Reservation Complete</h2>
+                <a href="#" class="home">Reservation Invoice</a>
                 <a class="m0">/</a>
                 <a>Invoice</a>
             </div>
@@ -44,36 +51,36 @@ include "include/head.php";
                 <div class="col-xs-6">
                     <address>
                         <strong>Billed To:</strong><br>
-                        John Smith<br>
-                        client@gmail.com<br>
-                        +55 4XX-634-7071<br>
-                        1234 Main Apt. 4B<br>
-                        Springfield, ST 54321
+                        <?php echo Input::get('title'). ' ' . Input::get('fname'). ' ' . Input::get('lname'); ?><br>
+                        <?php echo Input::get('email'); ?><br>
+                        <?php echo Input::get('phone'); ?><br>
+                        <?php echo Input::get('address'); ?><br>
+                        <?php echo Input::get('city'); ?>, <?php echo Input::get('city'); ?>
                     </address>
                 </div>
                 <div class="col-xs-6 text-right">
                     <address>
                         <strong>Company:</strong><br>
-                        The Hotel Empire<br>
-                        <a>http://hotelempire.com</a><br>
+                        The Executive Hostel<br>
+                        <a>http://gecc.com</a><br>
                         +55 4XX-634-7071<br>
                         1234 Main Apt. 4B<br>
-                        Springfield, ST 54321
+                        P. O. Box AH 50
                     </address>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <address>
+                    <!-- <address>
                         <strong>Payment Method:</strong><br>
                         Visa ending **** 4242<br>
                         jsmith@email.com
-                    </address>
+                    </address> -->
                 </div>
                 <div class="col-xs-6 text-right">
                     <address>
                         <strong>Booking Date:</strong><br>
-                        Dec 7, 2016
+                        <?php echo date('F j, Y'); ?>
                     </address>
                 </div>
             </div>
@@ -85,7 +92,7 @@ include "include/head.php";
                             Product
                         </th>
                         <th>
-                            Night
+                            Night(s)
                         </th>
                         <th class="text-right">
                             Total
@@ -95,13 +102,13 @@ include "include/head.php";
                     <tbody>
                     <tr>
                         <td class="border-bottom">
-                            <strong>Liv Race Day Short</strong>
+                            <strong></strong>
                         </td>
                         <td class="border-bottom">
-                            2
+                            <?php echo $diff; ?>
                         </td>
                         <td class="text-right border-bottom">
-                            $155.22
+                            $<?php echo number_format((float)$diff * $c->getPrice(), 2, '.', ''); ?>
                         </td>
                     </tr>
                     <tr>
@@ -109,7 +116,7 @@ include "include/head.php";
                             <strong>Room:</strong>
                         </td>
                         <td>
-                            <span>STA - KING SUITE</span>
+                            <span><?php echo $c->getName(); ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -117,7 +124,7 @@ include "include/head.php";
                             <strong>Checkin Date:</strong>
                         </td>
                         <td>
-                            <span>May 5,2015</span>
+                            <span><?php echo date_format(date_create(Input::get('from_date')), 'F j, Y') ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -125,7 +132,7 @@ include "include/head.php";
                             <strong>Checkout Date:</strong>
                         </td>
                         <td>
-                            <span>May 7,2015</span>
+                            <span><?php echo date_format(date_create(Input::get('to_date')), 'F j, Y') ?></span>
                         </td>
                     </tr>
                     <tr>
@@ -133,7 +140,7 @@ include "include/head.php";
                             <strong>Guest</strong>
                         </td>
                         <td>
-                            <span>2</span>
+                            <span>Adults: <?php echo Input::get('adult'); ?>, Chlidren: <?php echo Input::get('child'); ?></span>
                         </td>
                     </tr>
                     </tbody>
@@ -150,7 +157,7 @@ include "include/head.php";
                     </div>
                 </div>
                 <div class="col-lg-3 col-lg-offset-4">
-                    <table class="price-table no-border">
+                    <!-- <table class="price-table no-border">
                         <tbody>
                         <tr>
                             <td>
@@ -185,15 +192,15 @@ include "include/head.php";
                             </td>
                         </tr>
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
             </div>
 
             <div class="thanks-area">
                 <p>
-                    For more information on your order please call us on 123 467 8961, or mail us at <a href="mailto:info@themevessel.com">info@themevessel.com</a>
+                    For more information on your order please call us on 123 467 8961, or mail us at <a href="mailto:info@gecc.com">info@gecc.com</a>
                     <br/>
-                    <strong>The Hotel Empire</strong>
+                    <strong>GECC</strong>
                 </p>
             </div>
         </div>

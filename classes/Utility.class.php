@@ -47,4 +47,25 @@ class Utility
 		$headers .= 'From: GECC'. "\r\n";
 		return mail($to, $subject, $message, $headers);
 	}
+
+	public static function addArr($arr, $val = 0, $key) {
+		$count = count($arr);
+		if ($count == 0) {
+			# code...
+			return $val;
+		} else {
+			$temp;
+			foreach ($arr as $value) {
+				# code...
+				$temp = (array) $value;
+				break;
+			}
+			$arr = array_slice($arr, 1, count($arr) - 1);
+			return self::addArr($arr, $val + $temp[$key], $key);
+		}
+	}
+
+	public function moneyFormat($price) {
+		return number_format((float)$price, 2, '.', ',');
+	}
 }

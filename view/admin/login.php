@@ -57,6 +57,9 @@
         $.backstretch("assets/img/login-bg.jpg", {speed: 500});
     </script>
     <script>
+      $('input').on('keypress', function(e) {
+        $('form').find('input').css('borderColor', '#e2e2e2');
+      });
       $('form').on('submit', function(e) {
         e.preventDefault();
         var _data = $(this).serialize();
@@ -65,11 +68,15 @@
           method: 'post',
           data: _data,
           success: function(d) {
-           if(d[0].indexOf('/cpanel/') >= 0) {
+            try {
+              if(d[0].indexOf('/cpanel/') >= 0) {
                 window.location.href = d[0];
-              } else {
-                alert('error logging in');
               }
+            } catch (err) {
+              if (!d[0]) {
+                $('form').find('input').css('borderColor', 'red');
+              }
+            }
           } 
         });
       })

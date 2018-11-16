@@ -90,9 +90,10 @@ include "include/head.php";
                             _form.find('small').hide();
                             _form.find('input[name="email"]').css('borderColor', 'green');
                             _form.removeClass('verify');
-                            _form.addClass('login');
+                            _form.addClass('login'); 
                            $('input[type="submit"]').val('Create Password');
                            $('[type="password"]').removeAttr('hidden');
+                           $('[type="password"]').attr('required', 'true');
                         } else {
                             _form.find('input[name="email"]').css('borderColor', 'red');
                             _form.find('small').show();
@@ -105,7 +106,26 @@ include "include/head.php";
                     }
                 });
             } else {
-                alert();
+                if (_form.find('[name="password"]').val() != _form.find('[id="password"]').val()) {
+                    alert('passwords must be the same');
+                    return false;
+                } else {
+                    alert(_form.serialize());
+                    return false;
+                    $.ajax({
+                        url: '/api/',
+                        method: 'post',
+                        data: _data,
+                        success: function (d) {
+                            // body...
+                            alert('success');
+                        },
+                        error: function (e) {
+                            // body...
+                            alert('error');
+                        }
+                    });
+                }
             }
         });
     });

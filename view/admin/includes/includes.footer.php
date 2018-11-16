@@ -4,7 +4,7 @@
     <!-- <script src="assets/js/jquery-1.8.3.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <!-- <script src="assets/js/jqueryForm.js"></script> -->
+    <script src="assets/js/jqueryForm.js"></script>
     <script src="http://localhost/view/admin/assets/js/cpanel.js"></script>
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
@@ -23,7 +23,43 @@
     <script src="assets/js/sparkline-chart.js"></script>    
     <script src="assets/js/zabuto_calendar.js"></script>
 	<script src="assets/js/app.js"></script>
+    <script>
+      $().ready(function() {
+        // alert();
+        function loopData(d) {
+          $.each(d, function(i, v) {
+            if(typeof v === 'object') {
+              loopData(v);
+            } else
+              console.log(i + " th value is "+ v);
+          });
+        }
 
+        $('.btn-action').on('click', function(e) {
+            $('input[name="reservation"]').val($(this).parents('tr').find('td').eq(0).text());
+        });
+        $('[data-toggle="popover"]').popover();
+
+        $('.link').on('click', function (e) {
+          $('.page-blocks').find('.row').addClass('hidden');
+          $($(this).data('target')).removeClass('hidden');
+        });
+
+        $('.get-info').on('click', function(e) {
+          var data = $(this).parents('tr').data('receipt');
+          $.each(data, function(i, v) {
+            if(typeof v === 'object') {
+              if(("label" in v) == false) {
+                $('.invoice-body').append('<p class="bg-info"> <span>-</span> <span class="pull-right">$ '+parseFloat(v.amount).toFixed(2)+'</span> </p>');
+              } else {
+                $('.invoice-body').append('<p><span>'+v.label+'</span> <span class="pull-right">$ '+parseFloat(v.amount).toFixed(2)+'</span></p>');
+              }
+            } //else
+              // $('.invoice-body').append('<br><p class="bg-danger"><span class="pull-right">owing <span><b>$ '+v+'</b></span></span></p>');
+          });
+        });
+      });
+    </script>
     <script>
         var doughnutData = [
         {

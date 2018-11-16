@@ -15,8 +15,10 @@ class Guest extends DBO
 	}
 
 	public function checkRoomAvailability($from, $to, $category) {
-		self::dbc()->query("SELECT * FROM `reservation` WHERE DATEDIFF('$from', `from_date`) < 0 AND DATEDIFF('$to', `from_date`) < 0 AND category_id = $category OR DATEDIFF('$from', `to_date`) > 0 AND DATEDIFF('$to', `to_date`) > 0 AND category_id = $category");
+		self::dbc()->query("SELECT * FROM `reservation` WHERE DATEDIFF('$from', `from_date`) <= 0 AND DATEDIFF('$to', `to_date`) >= 0 AND category_id = 2 OR DATEDIFF('$from', `from_date`) <= 0 AND DATEDIFF('$to', `to_date`) <= 0 AND category_id = 2 OR DATEDIFF('$from', `from_date`) >= 0 AND DATEDIFF('$to', `to_date`) >= 0 AND category_id = 2");
 		$res = self::dbc()->results();
+		var_dump($res);
+		die;
 		if (count($res) >= 0 && count(self::get('room', array('category_id' => $category))) > count($res)) {
 			# code...
 			return true;
@@ -38,11 +40,22 @@ class Guest extends DBO
 	}
 
 	public function register($params) {
-		$return = self::insert('clients', $params);
+		$return = self::get('clients', $params);
+		if (count($return)) {
+			# code...
+		} else {
+			$return = self::insert('clients', $params);
+		}
 		$link = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
 		$link .= '://'.$_SERVER['HTTP_HOST'].'/verify?hash='.md5($params['email']);
 		$message = 'Click the following link to verify your email as a GECC Guest<br><b>If this is not meant for you</b>, ignore this.<br><a href="'.$link.'">Click here</a> to proceed or run the following url in your browser.<br>'.$link;
 		Utility::sendMail('GECC Guest Account Email Verification', $params['email'], $message);
+		if (count($return)) {
+			# code...
+			Session::put('session_email', $params['email']);
+			Session::put('session_name', $return[0]->fullname);
+			Session::put('user_id', $return[0]->id);
+		}
 		return count($return) ? true : false;
 	}
 
@@ -77,9 +90,27 @@ class Guest extends DBO
 		return $this->isSignedIn() ? Session::get('user_id') : 0;
 	}
 
-	public function makeReservation($fd, $td, $c, $u) {
-		$u = $this->getKey();
-		return self::insert('reservation', array('from_date' => $fd, 'to_date' => $td, 'category_id' => $c, 'client_id' => $u));
+	public function makeReservation($fd, $td, $c, $u = null) {
+		$url = 'http://localhost/mail_template?email='.Input::get('email');
+		$url .= '&title='.Input::get('title'). '&fname=' . Input::get('fname'). '&lname=' . Input::get('lname');
+		$url .= '&phone='.Input::get('phone'). '&address=' . Input::get('address'). '&city=' . Input::get('city');
+		$url .= '&cat='.Input::get('cat'). '&country=' . Input::get('country'). '&city=' . Input::get('city');
+		$url .= '&from_date='.Input::get('from_date'). '&to_date=' . Input::get('to_date'). '&adult=' . Input::get('adult'). '&child=' . Input::get('child');
+		if (is_null($u)) {
+			# code...
+			if ($this->getKey() == 0) {
+				# code...
+				return null;
+			}
+			$u = $this->getKey();
+		}
+		$return = self::get('reservation', array('from_date' => $fd, 'to_date' => $td, 'category_id' => $c, 'client_id' => $u));
+		if (count($return)) {
+			# code...
+		} else {
+			$return = self::insert('reservation', array('from_date' => $fd, 'to_date' => $td, 'category_id' => $c, 'client_id' => $u));
+		}
+		Utility::sendMail('GECC Reservation Invoice', Input::get('email'), file_get_contents($url));
 	}
 
 	public function verify($email, $password) {

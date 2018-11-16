@@ -28,7 +28,7 @@
                     
                     <li><a href="contact.php">Contact Us</a></li>
                     <?php if (!$g->isSignedIn()): ?>
-                    <li><a href="#" role="button" data-toggle="popover" title="Popover title"  data-placement="bottom" 
+                    <li><a href="#" role="button" data-toggle="popover" title="Client Login"  data-placement="bottom" 
                         data-content="
                         <div style='width: 200px;'>
                             <form method='post' action='sign'>

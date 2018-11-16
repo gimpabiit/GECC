@@ -13,25 +13,25 @@ include "include/head.php";
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-            <div class="item item-1">
+            <!-- <div class="item item-1">
                 <div class="container">
-                    <!-- Banner Slider Inner 2 -->
+                    
                     <div class="banner-slider-inner-2 text-right">
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-6 col-sm-6 col-sm-offset-6">
                                 <div class="breadcrumb-area">
-                                    <!-- Titel-->
+                                    
                                     <h1><span>Welcome to</span> GECC</h1>
-                                    <!-- Paragraph -->
+                                    
                                     <p>Our 68 rooms and suites are wonderfully comfortable with a sleek décor.</p>
-                                    <!-- Btn -->
+                                    
                                     <a href="rooms-list.html" class="btn btn-fill">view all rooms</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="item item-2 active">
                 <div class="container">
                     <!-- Banner Slider Inner 2 -->

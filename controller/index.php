@@ -26,7 +26,6 @@ if (Input::exists('post')) {
 				$db->update($table, $where, $params);
 				$db->get($table, $where);
 				$data[] = $db->results();
-				// echo "execute put request";
 				break;
 			
 			case 'verify':
@@ -43,19 +42,15 @@ if (Input::exists('post')) {
 
 			case 'new_user':
 				# code...
-				// echo "Execute New User Addition";
 				$b = new Boss;
 				$data[] = $b->addUser($params);
 				break;
 
 			case 'new_category':
 				# code...
-				// echo "Execute New User Addition";
 				$a = new Admin;
 				$amenities = Input::get('amenities');
 				unset($params['amenities']);
-				// var_dump($params);
-				// die;
 				$data[] = $a->addCategory($params, $amenities, Input::getAll('file'));
 				break;
 
@@ -77,14 +72,24 @@ if (Input::exists('post')) {
 				$s = new Staff;
 				$data[] = $s->signUp($params);
 				break;
+
+			case 'add_bill':
+				# code...
+				$s = new Reception;
+				$data[] = $s->addBill($params);
+				break;
+
+			case 'add_payment':
+				# code...
+				$s = new Reception;
+				$data[] = $s->addClientPayment($params);
+				break;
 		}
 	} else {
-		// echo('sign up intended');
 		if ($router->hasJuice()) {
 			# code...
 			echo "error: go to 404 page";
 		} else {
-			// $data['form-data'] = Input::getAll();
 			$db->get($table, Input::getAll());
 			if (count($db->results())) {
 				# code...
